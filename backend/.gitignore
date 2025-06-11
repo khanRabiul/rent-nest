@@ -1,0 +1,18 @@
+
+# Node modules
+node_modules/
+
+# TypeScript build output
+dist/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
