@@ -5,6 +5,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import authRoues from './routes/authRoutes';
+import propertyRoutes from  './routes/propertyRoutes';
 import * as jwtUtils from './utils/jwt';
 
 
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGODB_URI as string)
   .catch((err) => console.log(err));
 
 app.use('/api/auth', authRoues);
+app.use('/api/properties', propertyRoutes);
 
 app.get('/', (req, res) => {
   res.send('RenNest backend API is running');
