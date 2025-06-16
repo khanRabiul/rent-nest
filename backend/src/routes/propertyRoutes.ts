@@ -108,6 +108,47 @@ router.get('/properties/:id', async (req: Request, res: Response) => {
   }
 });
 
+router.put(
+  '/properties/:id',
+  protect,
+  authorizeRoles('landlord', 'admin'),
+  async (req: Request, res: Response) => {
+    try {
+      const propertyId = req.params.id;
+      const updates = req.body;
+
+      let property = await Property.findById(propertyId);
+
+      if (!property) {
+        return res.status(404).json({ message: 'Property not found.' });
+
+        if (property?.landlord.toString() !== req.user?._id?.toString() && req.user?.role !== 'admin') {
+          return res.status(403).json({ message: 'You are not authorized to update this property.' })
+        }
+      }
+
+      property = await Property.findByIdAndUpdate(propertyId, updates, { new: true, runValidators: true });
+
+      res.status(200).json({
+        message: 'Property updated successfully!',
+        property,
+      });
+
+    } catch (error: any) {
+      console.error('Update Property Error:', error.message);
+      if (error.name === 'CastError') {
+        return res.status(400).json({ message: 'Invalid property ID format' });
+
+        if (error.name === 'ValidationError') {
+          const messages = Object.values(error.errors).map((val: any) => val.message);
+          return res.status(400).json({ message: messages.join(', ') });
+        }
+        res.status(500).json({ message: 'Server error during updating property.', error: error.message})
+      }
+    }
+  }
+);
+
 
 
 
