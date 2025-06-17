@@ -1,10 +1,9 @@
-// backend/src/routes/inquiryRoutes.ts
 import { Router, Request, Response, NextFunction } from 'express';
 import { protect, authorizeRoles } from '../middleware/authMiddleware';
 import Inquiry from '../models/Inquiry';
-import User from '../models/Users'; // নিশ্চিত করুন যে এটি User (singular) মডেলকে নির্দেশ করছে
+import User from '../models/Users'; 
 import Property from '../models/Property';
-// import inquiryRoutes from './inquiryRoutes'; // <-- এই লাইনটি মুছতে হবে!
+
 
 
 const router = Router();
@@ -74,7 +73,7 @@ router.get(
 
       const inquiries = await Inquiry.find({ recipient: landlordId })
         .populate('sender', 'username email fullName profilePicture')
-        .populate('property', 'title location.address images'); // 'titele' থেকে 'title' আগেই ঠিক করা হয়েছে, নিশ্চিত করুন
+        .populate('property', 'title location.address images');
 
       res.status(200).json({
         message: 'Inquiries retrieved successfully!',
