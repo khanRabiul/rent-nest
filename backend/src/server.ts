@@ -7,9 +7,12 @@ import cors from 'cors';
 import authRoues from './routes/authRoutes';
 import propertyRoutes from  './routes/propertyRoutes';
 import * as jwtUtils from './utils/jwt';
+import inquiryRoutes from './routes/inquiryRoutes';
+
 
 
 const app = express();
+app.use('/api/inquiries', inquiryRoutes)
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
