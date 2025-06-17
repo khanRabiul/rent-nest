@@ -58,3 +58,30 @@ router.post('/',
   }
 );
 
+router.get(
+  '/langlord',
+  protect,
+  authorizeRoles('landlord', 'admin'),
+  async (req: Request, res: Response) => {
+    try {
+      const landlordId = req.user?._id;
+      if(!landlordId){
+        return res.status(401).json({message: 'Landlord ID ont found. Authentication failed.'})
+      }
+
+      const inquiries = await Inquiry.find({ recipient: landlordId})
+      .populate('sender', 'username email fullName profilePicture')
+      .populate('property', 'titele location.address images');
+      
+      res.status(200).json({
+        message: 'Inquries retrieved successfully',
+        count: inquiries.length,
+        inquiries,
+      })
+
+    } catch (error: any) {
+      console.error('Get Landlord Inquiries Error:', error.message)
+      res.status(500).json({message: 'Server error during fetching inquiries.', error: error.message})
+    }
+  }
+);
