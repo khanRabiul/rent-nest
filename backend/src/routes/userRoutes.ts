@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import mongoose from "mongoose";
 import { protect, authorizeRoles } from "../middleware/authMiddleware";
 import User from "../models/Users";
 import cloudinary from "../config/cloudineryConfig";
@@ -57,7 +58,6 @@ router.put(
 )
 
 // update profile picture
-
 router.put(
   '/profile-picture',
   protect,
@@ -99,3 +99,43 @@ router.put(
   }
 )
 
+// user blocked route by admin
+router.put(
+  '/:id/block',
+  protect,
+  authorizeRoles('admin'),
+  async (req: Request, res: Response) => {
+    try {
+      const userIdToBlock = req.params.id;
+      const {isBlocked} = req.body;
+
+      const user = await User.findById(userIdToBlock);
+
+      if(!user) {
+        return res.status(404).json({message: 'User not found.'})
+      }
+
+      if((user._id as mongoose.Types.ObjectId).toString() === req.user?._id?.toString()){
+        return res.status(403).json({message: 'Admin cannot block themselves.'})
+      }
+
+      user.isBlocked = isBlocked;
+      await user.save();
+
+      res.status(200).json({
+        message: `User ${user.username} has been ${isBlocked ? 'blocked' : 'unblocked'} successfully!`,
+        user: {id: user._id, username: user.username, isBlocked: user.isBlocked}
+      });
+
+
+    } catch (error: any) {
+      console.error('Block User Error:', error.message);
+      if(error.name === 'CastError') {
+        return res.status(400).json({message: 'Invalid User ID format'})
+      } 
+      res.status(500).json({message: 'Server error during user block/unblock.', error: error.message})
+    }
+  }
+);
+
+export default router;
