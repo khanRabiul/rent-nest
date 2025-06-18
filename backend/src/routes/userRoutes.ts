@@ -186,6 +186,45 @@ router.put(
   }
 );
 
+// Get saved properties
+router.get(
+  '/saved-properties',
+  protect,
+  async (req: Request, res: Response) => {
+    try {
+      const userId = req.user?._id;
+
+      if (!userId) {
+        return res.status(401).json({ message: 'Unauthorized user. Please log in' });
+      }
+
+      const user = await User.findById(userId)
+        .populate({
+          path: 'savedProperties',
+          populate: {
+            path: 'landlord',
+            select: 'username email fullName profilePicture'
+          }
+        })
+        .select('savedProperties');
+
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+
+      res.status(200).json({
+        message: 'Saved properties retrived successfully!',
+        count: user.savedProperties.length,
+        savedProperties: user.savedProperties,
+      });
+
+    } catch (error: any) {
+      console.error('Get Saved Properties Error:', error.message);
+      res.status(500).json({ message: 'Server error during fetching savd properties', error: error.message });
+    }
+  }
+)
+
 
 
 export default router;
