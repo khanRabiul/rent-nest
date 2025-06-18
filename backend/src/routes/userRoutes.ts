@@ -5,6 +5,7 @@ import cloudinary from "../config/cloudineryConfig";
 
 const router = Router()
 
+// update profile info
 router.put(
   '/profile',
   protect,
@@ -54,3 +55,47 @@ router.put(
     }
   }
 )
+
+// update profile picture
+
+router.put(
+  '/profile-picture',
+  protect,
+  async (req: Request, res: Response) => {
+    try {
+      const userId = req.user?._id;
+      const { profilePictureUrl } = req.body;
+
+      if (!userId) {
+        return res.status(401).json({
+          message: 'User not authenticated.',
+        });
+      }
+
+      if (!profilePictureUrl) {
+        return res.status(400).json({
+          message: 'Profile picture URL is required.',
+        })
+      }
+
+      let user = await User.findById(userId);
+
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      user.profilePicture = profilePictureUrl;
+      await user.save();
+
+      res.status(200).json({
+        message: 'Profile picture updated successfully!',
+        profilePicture: user.profilePicture,
+      });
+
+    } catch (error: any) {
+      console.error('Update Profile Picture Error:', error.message);
+      res.status(500).json({message: 'Server error during profile picture update', error: error.message})
+    }
+  }
+)
+
