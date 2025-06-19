@@ -6,7 +6,7 @@ import User from "../models/Users";
 const router = Router();
 
 router.post(
-  '/properties',
+  '/',
   protect,
   authorizeRoles('landlord', 'admin'),
   async (req: Request, res: Response) => {

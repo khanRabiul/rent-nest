@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import mongoose from "mongoose";
 import { protect, authorizeRoles } from "../middleware/authMiddleware";
 import User from "../models/Users";
-import cloudinary from "../config/cloudineryConfig";
+import cloudinary from "../config/cloudinaryConfig";
 import Property from "../models/Property";
 
 const router = Router()

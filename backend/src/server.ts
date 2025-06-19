@@ -23,7 +23,8 @@ mongoose.connect(process.env.MONGODB_URI as string)
 
 app.use('/api/auth', authRoutes);
 app.use('/api/inquiries', inquiryRoutes);
-app.use('/api/properties', propertyRoutes);
+// app.use('/api/properties', propertyRoutes);
+app.use('/api/properties', propertyRoutes)
 app.use('/api/upload', uploadRoutes);
 
 const PORT = process.env.PORT || 5000;

@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import multer from "multer";
-import cloudinary from "../config/cloudineryConfig";
+import cloudinary from "../config/cloudinaryConfig";
 import { protect } from "../middleware/authMiddleware";
 
 const router = Router();
