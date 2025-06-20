@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@custom-variant dark(&:where([data-theme='dark'], [data-theme=dark] *));
+
+
 @theme {
   --breakpoint-xs: 23.75rem;
   --breakpoint-sm: 40rem;
@@ -8,6 +11,45 @@
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 90rem;
   --breakpoint-3xl: 120rem;
+
+
+  --color-background-light: hsl(220, 14%, 96%);
+  --color-background-dark: hsl(207 95% 8%);
+
+  /* buttons bg colors light & dark*/
+  /* --color-primary: #2563EB;
+  --color-secondary: #EF4444;
+  --color-accent: #F97316; */
+
+  /* Text Colors light*/
+  /* --color-text-base: #1F2937; */
+
+  /* For primary color*/
+  /* --color-text-light: #4B5563; */
+
+  /* For secondary color*/
+
+  /* Text Colors dark*/
+  /* --color-text-dark: #F9FAFB; */
+
+  /* For primary color*/
+  /* --color-text-dark-light: #D1D5DB; */
+
+  /* For secondary color*/
+
+
+  /* Border & Divider Colors */
+  /* --color-border-base: #D1D5DB */
+}
+
+@layer base {
+  :root[data-theme='light'] {
+    background-color: var(--color-background-light);
+  }
+
+  :root[data-theme='dark'] {
+    background-color: var(--color-background-dark);
+  }
 }
 
 @layer components {
