@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-@custom-variant dark(&:where([data-theme='dark'], [data-theme=dark] *));
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
   --breakpoint-xs: 23.75rem;
@@ -12,34 +12,24 @@
   --breakpoint-2xl: 90rem;
   --breakpoint-3xl: 120rem;
 
-
+  /* Theme background colors */
   --color-background-light: hsl(220, 14%, 96%);
   --color-background-dark: hsl(207 95% 8%);
 
-  /* buttons bg colors light & dark*/
-  /* --color-primary: #2563EB;
-  --color-secondary: #EF4444;
-  --color-accent: #F97316; */
-
   /* Text Colors light*/
-  /* --color-text-base: #1F2937; */
-
-  /* For primary color*/
-  /* --color-text-light: #4B5563; */
-
-  /* For secondary color*/
+  --color-text-base: hsl(215, 28%, 17%);
+  --color-text-light: hsl(215, 14%, 34%);
 
   /* Text Colors dark*/
-  /* --color-text-dark: #F9FAFB; */
-
-  /* For primary color*/
-  /* --color-text-dark-light: #D1D5DB; */
-
-  /* For secondary color*/
+  --color-text-dark: hsl(210, 20%, 98%);
+  --color-text-dark-light: hsl(216, 12%, 84%);
 
 
-  /* Border & Divider Colors */
-  /* --color-border-base: #D1D5DB */
+  /* buttons bg colors light & dark */
+  --color-btnPrimary: hsl(221, 83%, 53%);
+  --color-accent: hsl(25, 95%, 53%);
+  --color-secondary: hsl(0, 84%, 60%);
+
 }
 
 @layer base {
