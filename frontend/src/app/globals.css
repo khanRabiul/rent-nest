@@ -1,9 +1,27 @@
-@import "tailwindcss";
-
+@import 'tailwindcss';
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
+  /* theme background color */
+  --bg-color-light-default: hsl(220, 14%, 96%); /* Light mode default */
+  --bg-color-dark-default: hsl(207, 95%, 8%);   /* Dark mode default */
+
+  /* font color */
+  --font-color-light-base: hsl(215, 28%, 17%);    
+  --font-color-light-secondary: hsl(215, 14%, 34%); 
+  --font-color-dark-base: hsl(210, 20%, 98%);     
+  --font-color-dark-secondary: hsl(216, 12%, 84%); 
+
+  /* button and accent color*/
+  --button-primary-color: hsl(221, 83%, 53%);
+  --accent-color-highlight: hsl(25, 95%, 53%);
+  --secondary-color-alert: hsl(0, 84%, 60%);
+
+  /* card and border color*/
+  --card-bg-light-default: hsl(0, 0%, 100%);   
+  --border-color-base: hsl(210, 13%, 85%);     
+
   --breakpoint-xs: 23.75rem;
   --breakpoint-sm: 40rem;
   --breakpoint-md: 48rem;
@@ -11,35 +29,41 @@
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 90rem;
   --breakpoint-3xl: 120rem;
-
-  /* Theme background colors */
-  --color-background-light: hsl(220, 14%, 96%);
-  --color-background-dark: hsl(207 95% 8%);
-
-  /* Text Colors light*/
-  --color-text-base: hsl(215, 28%, 17%);
-  --color-text-light: hsl(215, 14%, 34%);
-
-  /* Text Colors dark*/
-  --color-text-dark: hsl(210, 20%, 98%);
-  --color-text-dark-light: hsl(216, 12%, 84%);
-
-
-  /* buttons bg colors light & dark */
-  --color-btnPrimary: hsl(221, 83%, 53%);
-  --color-accent: hsl(25, 95%, 53%);
-  --color-secondary: hsl(0, 84%, 60%);
-
 }
 
+
 @layer base {
+  /* Light Mode */
   :root[data-theme='light'] {
-    background-color: var(--color-background-light);
+    --background: var(--bg-color-light-default);
+    --foreground: var(--font-color-light-base);
+    --foreground-muted: var(--font-color-light-secondary); 
+    --card-bg: var(--card-bg-light-default);
+    --border: var(--border-color-base);
+
+    --primary: var(--button-primary-color);
+    --accent: var(--accent-color-highlight);
+    --secondary: var(--secondary-color-alert);
   }
 
+  /* Dark Mode  */
   :root[data-theme='dark'] {
-    background-color: var(--color-background-dark);
+    --background: var(--bg-color-dark-default);
+    --foreground: var(--font-color-dark-base);
+    --foreground-muted: var(--font-color-dark-secondary);
+    --card-bg: hsl(215, 19%, 25%);   
+    --border: hsl(210, 10%, 30%);    
+
+    --primary: hsl(221, 83%, 65%);
+    --accent: hsl(25, 95%, 65%);     
+    --secondary: hsl(0, 84%, 65%);   
   }
+}
+
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 @layer components {
@@ -47,3 +71,4 @@
     @apply mx-auto px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12;
   }
 }
+

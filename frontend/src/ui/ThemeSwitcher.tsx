@@ -26,7 +26,7 @@ const toggleTheme = () => {
   }
 
   const currentIcon = resolvedTheme === 'dark' ? (<Sun size={24} className="text-yellow-500" />) :
-  (<Moon size={24} className="text-gray-700"/>);
+  (<Moon size={24} strokeWidth={2} className="text-gray-700"/>);
 
   return (
     <button
