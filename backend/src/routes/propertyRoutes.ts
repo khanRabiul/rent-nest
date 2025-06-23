@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import { protect, authorizeRoles } from "../middleware/authMiddleware";
 import Property from "../models/Property";
-import User from "../models/Users"; 
+import User from "../models/Users";
 
 const router = Router();
 
@@ -162,5 +162,26 @@ router.delete(
     }
   }
 );
+
+router.get(
+  '/types',
+  async (req: Request, res: Response) => {
+    try {
+      const propertyTypes = (Property.schema.paths.propertyType as any).enumValues;
+
+      if (!propertyTypes || propertyTypes.length === 0) {
+        return res.status(404).json({ message: 'No property types found.' })
+      }
+
+      res.status(200).json({
+        message: 'Property types retrieved successfully!',
+        types: propertyTypes,
+      })
+    } catch (error: any) {
+      console.error('Get Property Types Errror:', error.message);
+      res.status(500).json({ message: 'SErver error during fetching property types.', error: error.message })
+    }
+  }
+)
 
 export default router;

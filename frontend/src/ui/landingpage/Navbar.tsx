@@ -52,7 +52,7 @@ const Navbar = () => {
             <Link href='/contact-us' className={`font-medium hover:text-[var(--secondary)] ${pathname === '/contact-us' ? 'text-[var(--secondary)]  underline underline-offset-5 decoration-2' : ''}`}>Contact us</Link>
             
             {isLoggedIn && (
-              <Link href='/saved-properties'className={`font-semibold hover:text-[var(--secondary)] ${pathname === '/saved-properties' ? 'text-[var(--secondary)] underline underline-offset-5 decoration-2' : ''}`}>Saved Properties</Link>
+              <Link href='/profile/saved-properties'className={`font-semibold hover:text-[var(--secondary)] ${pathname === '/saved-properties' ? 'text-[var(--secondary)] underline underline-offset-5 decoration-2' : ''}`}>Saved Properties</Link>
             )}
 
             {isLoggedIn && userRole === 'user' && (
@@ -63,7 +63,7 @@ const Navbar = () => {
               <Link href='/admin/dashboard' className={`font-semibold hover:text-[var(--secondary)] ${pathname === '/admin/dashboard' ? 'text-[var(--secondary)] underline underline-offset-5 decoration-2' : ''}`}>Admin Dashboard</Link>
             )}
 
-            <Link href='/signin' className="text-sm xl:text-base font-medium hover:text-[var(--secondary)] px-4 py-1.5 bg-[var(--primary)] text-white rounded-md">
+            <Link href='/signin' className="text-sm xl:text-base font-medium hover:opacity-90 px-4 py-1.5 bg-[var(--primary)] text-white rounded-md transition duration-200">
               Sign In
             </Link>
             <Link href='/signup' className="text-sm xl:text-base font-medium hover:text-[var(--secondary)] px-4 py-1.5 border rounded-md">
@@ -106,7 +106,7 @@ const Navbar = () => {
                   Contact Us
                 </Link>
                 {isLoggedIn && (
-                  <Link href="/saved-properties" className="block px-3 py-2 rounded hover:bg-[var(--primary)] hover:text-white font-medium transition-colors" onClick={toggleMobileMenu}>
+                  <Link href="/profile/saved-properties" className="block px-3 py-2 rounded hover:bg-[var(--primary)] hover:text-white font-medium transition-colors" onClick={toggleMobileMenu}>
                     Saved Properties
                   </Link>
                 )}
