@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import ThemeSwitcher from "../ThemeSwitcher";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
+import RentNestLogo from "../additionals/RentNestLogo";
 
 const Navbar = () => {
 
@@ -39,30 +39,34 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'bg-white/80 backdrop-filter backdrop-blur-lg shadow-lg' : 'bg-transparent'} text-[var(--foreground)]`}
     >
-      <div className="container flex items-center justify-between gap-8">
+      <div className="container flex items-center justify-between gap-6 text-sm xl:text-base py-4 lg:py-6 px-4 lg:px-8">
         {/* Logo on the left */}
-        <Link href='/' className="flex-shrink-0">
-          <Image src='/images/logo/rent-nest-tranparent.png' alt="RentNest Logo" width={100} height={40} />
-        </Link>
+        <div>
+          <RentNestLogo />
+        </div>
 
         {/* Desktop Menu and ThemeSwitcher on the right */}
         <div className="flex-1 flex items-center justify-end">
-          <div className="hidden lg:flex items-center gap-6">
-            <Link href='/' className="font-semibold hover:text-[var(--secondary)]">Home</Link>
-            <Link href='/contact-us' className="font-semibold hover:text-[var(--secondary)]">Contact us</Link>
+          <div className="hidden lg:flex items-center gap-4 lg:gap-6 xl:gap-8">
+            <Link href='/' className={`font-semibold hover:text-[var(--secondary)] ${pathname === '/' ? 'text-[var(--secondary)] underline underline-offset-5 decoration-2' : ''}`}>Home</Link>
+            <Link href='/contact-us' className={`font-medium hover:text-[var(--secondary)] ${pathname === '/contact-us' ? 'text-[var(--secondary)]  underline underline-offset-5 decoration-2' : ''}`}>Contact us</Link>
+            
             {isLoggedIn && (
-              <Link href='/saved-properties' className="font-semibold hover:text-[var(--secondary)]">Saved Properties</Link>
+              <Link href='/saved-properties'className={`font-semibold hover:text-[var(--secondary)] ${pathname === '/saved-properties' ? 'text-[var(--secondary)] underline underline-offset-5 decoration-2' : ''}`}>Saved Properties</Link>
             )}
+
             {isLoggedIn && userRole === 'user' && (
-              <Link href='/landlord/dashboard' className="font-semibold hover:text-[var(--secondary)]">My Properties</Link>
+              <Link href='/landlord/dashboard' className={`font-semibold hover:text-[var(--secondary)] ${pathname === '/landlord/dashboard' ? 'text-[var(--secondary)] underline underline-offset-5 decoration-2' : ''}`}>My Properties</Link>
             )}
+
             {isLoggedIn && userRole === 'user' && (
-              <Link href='/admin/dashboard' className="font-semibold hover:text-[var(--secondary)]">Admin Dashboard</Link>
+              <Link href='/admin/dashboard' className={`font-semibold hover:text-[var(--secondary)] ${pathname === '/admin/dashboard' ? 'text-[var(--secondary)] underline underline-offset-5 decoration-2' : ''}`}>Admin Dashboard</Link>
             )}
-            <Link href='/signin' className="font-semibold hover:text-[var(--secondary)] px-4 py-2 bg-[var(--primary)] text-white rounded-md">
+
+            <Link href='/signin' className="text-sm xl:text-base font-medium hover:text-[var(--secondary)] px-4 py-1.5 bg-[var(--primary)] text-white rounded-md">
               Sign In
             </Link>
-            <Link href='/signup' className="font-semibold hover:text-[var(--secondary)] px-4 py-2 border rounded-md">
+            <Link href='/signup' className="text-sm xl:text-base font-medium hover:text-[var(--secondary)] px-4 py-1.5 border rounded-md">
               Sign Up
             </Link>
             <ThemeSwitcher />
@@ -125,15 +129,15 @@ const Navbar = () => {
               <div className="mt-auto flex flex-col gap-2">
                 {!isLoggedIn ? (
                   <>
-                    <Link href="/auth/signin" className="w-full text-center px-4 py-2 rounded-md bg-[var(--primary)] text-white hover:opacity-90 transition-opacity font-semibold" onClick={toggleMobileMenu}>
+                    <Link href="/signin" className="w-full text-center px-4 py-2 rounded-md bg-[var(--primary)] text-white hover:opacity-90 transition-opacity font-medium" onClick={toggleMobileMenu}>
                       Sign In
                     </Link>
-                    <Link href="/auth/signup" className="w-full text-center px-4 py-2 rounded-md border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white transition-colors font-semibold" onClick={toggleMobileMenu}>
+                    <Link href="/signup" className="w-full text-center px-4 py-2 rounded-md border border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white transition-colors font-medium" onClick={toggleMobileMenu}>
                       Sign Up
                     </Link>
                   </>
                 ) : (
-                  <button className="w-full px-4 py-2 rounded-md bg-[var(--secondary)] text-white hover:opacity-90 transition-opacity font-semibold" onClick={toggleMobileMenu}>
+                  <button className="w-full px-4 py-2 rounded-md bg-[var(--secondary)] text-white hover:opacity-90 transition-opacity font-medium" onClick={toggleMobileMenu}>
                     Log Out
                   </button>
                 )}
