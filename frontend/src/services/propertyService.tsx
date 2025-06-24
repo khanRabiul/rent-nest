@@ -8,7 +8,7 @@ const propertyService = {
     return response.data;
   },
 
- getSingleProperty: async (id) => {
+ getSingleProperty: async (id: string) => {
     const response = await axios.get(`<span class="math-inline">\{API\_BASE\_URL\}/properties/</span>{id}`);
     return response.data;
   },
