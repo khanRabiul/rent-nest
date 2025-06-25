@@ -58,6 +58,21 @@
     --accent: hsl(25, 95%, 65%);     
     --secondary: hsl(0, 84%, 65%);   
   }
+
+  select, input {
+    color: var(--foreground);
+    background: var(--bg-light);
+    font-weight: 500;
+  }
+  option {
+    color: var(--foreground);
+    background: var(--card-bg);
+    font-weight: 500;
+  }
+  [data-theme='dark'] option {
+    color: var(--foreground, #fff);
+    background: var(--card-bg, #222);
+  }
 }
 
 

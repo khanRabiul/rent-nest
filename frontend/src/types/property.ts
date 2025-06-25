@@ -12,7 +12,6 @@ export interface IPropertyData {
       latitude: number;
       longitude: number;
     };
-
   };
   propertyType: 'Apartment' | 'House' | 'Condo' | 'Room' | 'Shop' | 'Office' | 'Other';
   bedrooms: number;
