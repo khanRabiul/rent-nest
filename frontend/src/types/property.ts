@@ -25,3 +25,4 @@ export interface IPropertyData {
   advancePayment?: number;
   hasWindows?: boolean;
 }
+

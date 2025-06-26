@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Serachbar from "./Searchbar";
 import SearchBar from "./Searchbar";
 
 const HeroSection = () => {
@@ -14,13 +13,17 @@ const HeroSection = () => {
         }}
       />
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl text- font-bold">Your Dream Home Awaits</h1>
-        <br />
-        <p className="mt-2 text-lg md:text-xl lg:text-2xl  max-w-2xl font-semibold text-[var(--foreground)]">
-          Discover the perfect place to live, work, and thrive.</p>
+      <div className="absolute inset-0 flex flex-col items-center justify-center lg:gap-2.5">
+        <div>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl text- font-bold text-center">Your Dream Home Awaits</h1>
+          <br />
+          <p className="mt-2 text-base lg:text-lg  max-w-2xl font-semibold text-[var(--foreground-muted)] text-center">Find the best properties in your desired location.
+            Discover the perfect place to live, work, and thrive.</p>
 
+        </div>
+        <div>
           <SearchBar />
+        </div>
       </div>
     </section>
   );

@@ -5,7 +5,7 @@ import ThemeSwitcher from "../ThemeSwitcher";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
-import RentNestLogo from "../additionals/RentNestLogo";
+import RentNestLogo from "../components/RentNestLogo";
 
 const Navbar = () => {
 
@@ -37,10 +37,10 @@ const Navbar = () => {
 
   return (
       <nav
-          className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'bg-white/80 backdrop-filter backdrop-blur-lg shadow-lg' : 'bg-transparent'} text-[var(--foreground)]`}
+          className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out ${isScrolled ? 'bg-white/10 backdrop-filter backdrop-blur-lg shadow-lg' : 'bg-transparent'} text-[var(--foreground)]`}
       >
         <div
-            className="container flex items-center justify-between gap-6 text-sm xl:text-base py-4 lg:py-6 px-4 lg:px-8">
+            className="container flex items-center justify-between gap-6 text-sm xl:text-base py-2 lg:py-4 px-4 lg:px-8">
           {/* Logo on the left */}
           <div>
             <RentNestLogo/>
