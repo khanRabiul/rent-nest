@@ -26,3 +26,10 @@ export interface IPropertyData {
   hasWindows?: boolean;
 }
 
+export interface IPropertyResponse extends IPropertyData {
+  _id: string;
+  landlord: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number
+}
