@@ -1,9 +1,14 @@
 'use client';
 
+import { IPropertyResponse } from "@/types/property";
 import Image from "next/image";
 import Link from "next/link";
 
-const PropertyCard = ({ property }:any) => {
+interface IPropertyCardProps {
+  property: IPropertyResponse;
+}
+
+const PropertyCard = ({ property }: IPropertyCardProps) => {
 
   if (!property) {
     return null;

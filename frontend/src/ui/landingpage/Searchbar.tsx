@@ -2,16 +2,16 @@
 
 import propertyService from "@/services/propertyService";
 import { Search } from "lucide-react";
-import { tree } from "next/dist/build/templates/app-page";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const SearchBar = () => {
 
   const [propertyType, setPropertyType] = useState('');
-  const [location, setLocation] = useState('')
+  const [location, setLocation] = useState('');
   const [propertyTypesList, setPropertyTypesList] = useState([]);
   const [loadingTypes, setLoadingTypes] = useState(true);
+  const [errorTypes, setErrorTypes] = useState<string | null>(null);
 
   const router = useRouter();
 
@@ -19,11 +19,13 @@ const SearchBar = () => {
     const fetchPropertyTypes = async () => {
       try {
         setLoadingTypes(true);
+        setErrorTypes(null); // Reset error before fetching
         const types = await propertyService.getPropertyTypes();
         setPropertyTypesList(types);
-
       } catch (error: any) {
-        console.error('Failed to fetch property types:', error.response?.data || error.message);
+        const errMsg = error.response?.data?.message || error.message || "Failed to fetch property types";
+        setErrorTypes(errMsg);
+        console.error('Failed to fetch property types:', errMsg);
       } finally {
         setLoadingTypes(false)
       }
@@ -66,6 +68,11 @@ const SearchBar = () => {
             <option value={type} key={type}>{type}</option>
           ))}
         </select>
+        {errorTypes && (
+          <div className="mt-2 text-sm text-[var(--secondary)] font-medium">
+            {errorTypes}
+          </div>
+        )}
       </div>
 
       {/* Location Input */}

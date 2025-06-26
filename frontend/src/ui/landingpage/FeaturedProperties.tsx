@@ -4,10 +4,11 @@ import propertyService from "@/services/propertyService";
 import { useEffect, useState } from "react";
 import PropertyCard from "./PropertyCard";
 import Link from "next/link";
+import { IPropertyResponse } from "@/types/property";
 
 const FeaturedProperties = () => {
 
-  const [featuredProperties, setFeaturedProperties] = useState([]);
+  const [featuredProperties, setFeaturedProperties] = useState<IPropertyResponse[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 

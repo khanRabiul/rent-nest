@@ -4,7 +4,7 @@ import Property from "../models/Property";
 import User from "../models/Users";
 
 const router = Router();
-
+// Add a new property
 router.post(
   '/',
   protect,
@@ -46,7 +46,8 @@ router.post(
   }
 );
 
-router.get('/properties', async (req: Request, res: Response) => {
+// Get all properties
+router.get('/', async (req: Request, res: Response) => {
   try {
     const properties = await Property.find({ isPublished: true })
       .populate('landlord', 'username email fullName profilePicture');
@@ -62,7 +63,30 @@ router.get('/properties', async (req: Request, res: Response) => {
   }
 });
 
-router.get('/properties/:id', async (req: Request, res: Response) => {
+// Get Types of Properties
+router.get(
+  '/types',
+  async (req: Request, res: Response) => {
+    try {
+      const propertyTypes = (Property.schema.paths.propertyType as any).enumValues;
+
+      if (!propertyTypes || propertyTypes.length === 0) {
+        return res.status(404).json({ message: 'No property types found.' })
+      }
+
+      res.status(200).json({
+        message: 'Property types retrieved successfully!',
+        types: propertyTypes,
+      })
+    } catch (error: any) {
+      console.error('Get Property Types Errror:', error.message);
+      res.status(500).json({ message: 'SErver error during fetching property types.', error: error.message })
+    }
+  }
+)
+
+// Get a single property by ID
+router.get('/:id', async (req: Request, res: Response) => {
   try {
     const property = await Property.findById(req.params.id)
       .populate('landlord', 'username email fullName profilePicture');
@@ -84,8 +108,9 @@ router.get('/properties/:id', async (req: Request, res: Response) => {
   }
 });
 
+// Update a property
 router.put(
-  '/properties/:id',
+  '/:id',
   protect,
   authorizeRoles('landlord', 'admin'),
   async (req: Request, res: Response) => {
@@ -129,8 +154,9 @@ router.put(
   }
 );
 
+// Delete a property
 router.delete(
-  '/properties/:id',
+  '/:id',
   protect,
   authorizeRoles('landlord', 'admin'),
   async (req: Request, res: Response) => {
@@ -163,25 +189,6 @@ router.delete(
   }
 );
 
-router.get(
-  '/types',
-  async (req: Request, res: Response) => {
-    try {
-      const propertyTypes = (Property.schema.paths.propertyType as any).enumValues;
 
-      if (!propertyTypes || propertyTypes.length === 0) {
-        return res.status(404).json({ message: 'No property types found.' })
-      }
-
-      res.status(200).json({
-        message: 'Property types retrieved successfully!',
-        types: propertyTypes,
-      })
-    } catch (error: any) {
-      console.error('Get Property Types Errror:', error.message);
-      res.status(500).json({ message: 'SErver error during fetching property types.', error: error.message })
-    }
-  }
-)
 
 export default router;
