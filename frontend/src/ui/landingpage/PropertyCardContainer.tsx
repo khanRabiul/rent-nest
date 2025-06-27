@@ -2,7 +2,7 @@ import FeaturedProperties from "@/ui/landingpage/FeaturedProperties";
 
 const PropertyCardContainer = () => {
   return (
-    <div>PropertyCardContainer
+    <div>
       <FeaturedProperties />
     </div>
   );
