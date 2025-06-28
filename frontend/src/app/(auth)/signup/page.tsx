@@ -1,6 +1,10 @@
+import SignUpForm from "@/ui/auth/SignUpForm";
+
 const SignUpPage = () => {
   return (
-    <div>SignUpPage</div>
+    <div>
+      <SignUpForm />
+    </div>
   );
 };
 
