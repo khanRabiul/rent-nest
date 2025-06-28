@@ -47,7 +47,8 @@ const SignUpForm = () => {
 
   return (
     <div className="bg-[--card-bg] p-8 rounded-lg shadow-xl border border-[--border] w-full max-w-md">
-      <h1 className="text-3xl font-bold text-center mb-6 text-[--primary]">Sign Up</h1>
+      <h1 className="text-4xl text-center font-bold mb-6 text-[--primary]">RentNest</h1>
+      <h2 className="text-3xl font-semibold text-center mb-6 text-[--primary]">Sign Up</h2>
       {error && <p className="text-red-500 text-center mb-4">{error}</p>}
 
       <form onSubmit={handleSubmit}

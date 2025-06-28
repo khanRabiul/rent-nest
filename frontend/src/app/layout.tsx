@@ -1,9 +1,11 @@
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/ui/landingpage/Navbar";
 import { AuthProvider } from "@/contexts/AuthContext";
+import ClientNavbarWrapper from "@/ui/auth/ClientNavbarWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +27,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -32,7 +35,7 @@ export default function RootLayout({
       >
         <ThemeProvider enableSystem={true} defaultTheme="system">
           <AuthProvider>
-            <Navbar />
+            <ClientNavbarWrapper />
             {children}
           </AuthProvider>
         </ThemeProvider>
