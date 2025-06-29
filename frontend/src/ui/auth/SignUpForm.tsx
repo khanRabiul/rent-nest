@@ -110,7 +110,7 @@ const SignUpForm = () => {
 
         <button
           type="submit"
-          className="w-full px-4 py-2 rounded-md bg-rose-700 text-white font-semibold hover:opacity-90 transition-opacity"
+          className="w-full px-4 py-2 rounded-md bg-[var(--button-primary-color)]  text-white font-semibold hover:opacity-90 transition-opacity"
           disabled={formLoading}
         >
           {formLoading ? 'Registration on processing..' : 'Sign up'}

@@ -1,6 +1,10 @@
+import SignInForm from "@/ui/auth/SignInForm";
+
 const SignInPage = () => {
   return (
-    <div>SignInPage</div>
+    <div className="min-h-screen flex items-center justify-center bg-[--background] text-[--foreground]">
+      <SignInForm />
+    </div>
   );
 };
 
