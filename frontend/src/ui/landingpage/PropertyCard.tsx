@@ -34,7 +34,7 @@ const PropertyCard = ({ property }: IPropertyCardProps) => {
         <div className="p-4">
           <h3 className="text-xl font-semibold text-[--foreground] truncate mb-2" title={property.title}>{property.title}</h3>
           <p className="text-[--foreground-muted] text-sm mb-3" >
-            {property.location.address}, {property.location.city}
+             {property.location.city}
           </p>
           <div className="flex items-center justify-between text-[--foreground-muted] text-sm mb-3">
             <span className="bg-[--bg-light] px-2 py-1 rounded-full text-xs font-medium">{property.propertyType}</span>
