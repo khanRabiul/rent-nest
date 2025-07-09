@@ -1,4 +1,3 @@
-// frontend/src/app/properties/[id]/page.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -6,12 +5,11 @@ import { useParams } from 'next/navigation';
 import propertyService from '@/services/propertyService'; 
 import { IPropertyResponse } from '@/types/property'; 
 import { useAuth } from '@/contexts/AuthContext'; 
-import userService from '@/services/userService'; 
+// import userService from '@/services/userService'; 
 import { Heart, Bed, Bath, DoorOpen, MapPin, Tag, Currency, Wallet, Lightbulb, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link'; 
-
-import InquiryForm from '@/components/inquiries/InquiryForm'; 
+import InquiryForm from '@/ui/components/inquiries/InquiryForm';
 
 export default function PropertyDetailsPage() { 
   const { id } = useParams(); 
