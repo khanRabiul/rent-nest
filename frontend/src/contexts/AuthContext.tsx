@@ -5,7 +5,7 @@ import authService from "@/services/authService";
 import { useRouter } from "next/navigation";
 
 // user data interface
-interface IFrontendUser {
+export interface IFrontendUser {
   id: string;
   username: string;
   email: string;

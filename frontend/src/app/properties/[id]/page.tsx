@@ -1,20 +1,20 @@
-// frontend/src/app/properties/[id]/page.tsx
 "use client";
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import propertyService from '@/services/propertyService';
-import { IPropertyResponse } from '@/types/property'; 
+import { IPropertyResponse } from '@/types/property';
 import { useAuth } from '@/contexts/AuthContext';
-// import userService from '@/services/userService'; 
+import userServices from '@/services/userServices';
 import { Heart, Bed, Bath, DoorOpen, MapPin, Tag, Currency, Wallet, Lightbulb, CheckCircle } from 'lucide-react';
-import Image from 'next/image'; 
-import Link from 'next/link'; 
+import Image from 'next/image';
+import Link from 'next/link';
 
 import InquiryForm from '@/ui/components/inquiries/InquiryForm'; 
+import PropertyImageGallery from '@/ui/PropertyImageGallery';
 
-export default function PropertyDetailsPage() { 
-  const { id } = useParams(); 
+export default function PropertyDetailsPage() {
+  const { id } = useParams();
   const [property, setProperty] = useState<IPropertyResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export default function PropertyDetailsPage() {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    if (!id) return; 
+    if (!id) return;
 
     const fetchPropertyDetails = async () => {
       try {
@@ -32,7 +32,7 @@ export default function PropertyDetailsPage() {
         setError(null);
         
         const response = await propertyService.getSingleProperty(id as string);
-        setProperty(response.property); 
+        setProperty(response.property);
 
         if (!authLoading && isLoggedIn && user && user.savedProperties) {
             setIsSaved(user.savedProperties.some((savedId: string) => savedId === response.property._id));
@@ -67,12 +67,11 @@ export default function PropertyDetailsPage() {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-  
         alert('Your session has expired. Please log in again.');
         return;
       }
 
-      const response = await userService.saveToggleProperty(property!._id, token);
+      const response = await userServices.saveToggleProperty(property!._id, token);
       setIsSaved(response.saved);
       alert(response.message);
 
@@ -112,7 +111,6 @@ export default function PropertyDetailsPage() {
   return (
     <div className="min-h-screen pt-24 bg-[--background] text-[--foreground]">
       <div className="container mx-auto py-8">
-        {/* প্রপার্টির শিরোনাম এবং সেভ বাটন */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-4xl font-bold text-[--primary]">{property.title}</h1>
           <button
@@ -126,29 +124,9 @@ export default function PropertyDetailsPage() {
           </button>
         </div>
 
-        {/* ইমেজ ক্যারোসেল/গ্যালারি */}
-        <div className="relative w-full h-[500px] bg-gray-200 rounded-lg overflow-hidden mb-8">
-          <Image
-            src={property.images[0] || '/images/property/property_placeholder.jpg'}
-            alt={property.title}
-            fill={true}
-            style={{ objectFit: 'cover' }}
-            sizes="100vw"
-          />
-          {property.images.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-              {property.images.map((imgUrl, index) => (
-                <div key={index} className="w-16 h-12 bg-white/50 backdrop-blur-sm rounded-md cursor-pointer flex items-center justify-center">
-                  <Image src={imgUrl} alt={`Thumbnail ${index}`} width={50} height={30} objectFit="cover" className="rounded-md" />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <PropertyImageGallery images={property.images} title={property.title} />
 
-        {/* প্রপার্টি বিবরণ */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* মূল তথ্য */}
           <div className="md:col-span-2 bg-[--card-bg] p-6 rounded-lg shadow-md border border-[--border]">
             <h2 className="text-2xl font-semibold mb-4 text-[--foreground]">Details</h2> 
             <p className="text-[--foreground-muted] mb-4 leading-relaxed">{property.description}</p>
@@ -199,24 +177,35 @@ export default function PropertyDetailsPage() {
 
           <div className="md:col-span-1 bg-[--card-bg] p-6 rounded-lg shadow-md border border-[--border]">
             <h2 className="text-2xl font-semibold mb-4 text-[--foreground]">Landlord Information</h2> 
-            {property.landlord && (
+            {property.landlord && ( 
               <div className="flex items-center gap-4 mb-4">
-                {/* <Image src={property.landlord.profilePicture || '/images/default-avatar.png'} alt="Landlord Profile" width={50} height={50} className="rounded-full" /> */}
+                {property.landlord.profilePicture ? (
+                  <Image src={property.landlord.profilePicture} alt="Landlord Profile" width={50} height={50} className="rounded-full object-cover" />
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-semibold text-lg">
+                    {property.landlord.fullName ? property.landlord.fullName.charAt(0).toUpperCase() : (property.landlord.username ? property.landlord.username.charAt(0).toUpperCase() : '')}
+                  </div>
+                )}
+                
                 <div>
-                  <p className="font-semibold text-[--foreground]">{property.landlord}</p> 
-                  <p className="text-sm text-[--foreground-muted]">Role: Landlord</p> 
+                  <p className="font-semibold text-[--foreground]">{property.landlord.fullName || property.landlord.username}</p> 
+                  <p className="text-sm text-[--foreground-muted]">Role: {property.landlord.role}</p> 
                 </div>
               </div>
             )}
+            {!property.landlord && ( 
+                <p className="text-[--foreground-muted] text-sm mb-4">Landlord details not available.</p>
+            )}
+
             {isLoggedIn && user && ( 
               <div className="mt-6">
                 <h3 className="text-xl font-semibold mb-3 text-[--foreground]">Message Landlord</h3> 
-                <InquiryForm landlordId={property.landlord as string} propertyId={property._id} /> 
+                <InquiryForm landlordId={property.landlord._id as string} propertyId={property._id} /> 
               </div>
             )}
             {!isLoggedIn && (
               <p className="mt-6 text-[--foreground-muted] text-sm">
-                To message Landlord <Link href="/signin" className="text-[--primary] hover:underline">Log In</Link>. 
+                To message Landlord <Link href="/signin" className="text-[--primary] hover:underline">Log In</Link>
               </p>
             )}
           </div>

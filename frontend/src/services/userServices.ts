@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
-const userService = {
+const userServices = {
 
   // Save/ Unsave property
   saveToggleProperty: async (propertyId: string, token: string) => {
@@ -36,4 +36,4 @@ const userService = {
 
 };
 
-export default userService;
+export default userServices;

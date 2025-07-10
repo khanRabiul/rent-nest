@@ -1,3 +1,5 @@
+import { IFrontendUser } from "@/contexts/AuthContext";
+
 export interface IPropertyData {
   title: string;
   description: string;
@@ -28,7 +30,7 @@ export interface IPropertyData {
 
 export interface IPropertyResponse extends IPropertyData {
   _id: string;
-  landlord: string;
+  landlord: IFrontendUser;
   createdAt: string;
   updatedAt: string;
   __v: number
