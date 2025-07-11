@@ -10,8 +10,11 @@ import { Heart, Bed, Bath, DoorOpen, MapPin, Tag, Currency, Wallet, Lightbulb, C
 import Image from 'next/image';
 import Link from 'next/link';
 
-import InquiryForm from '@/ui/components/inquiries/InquiryForm'; 
+import InquiryForm from '@/ui/components/inquiries/InquiryForm';
 import PropertyImageGallery from '@/ui/PropertyImageGallery';
+import Location from '@/ui/properties/Location';
+import LandlordInfo from '@/ui/properties/LandlordInfo';
+import PropertyInfo from '@/ui/properties/PropertyInfo';
 
 export default function PropertyDetailsPage() {
   const { id } = useParams();
@@ -30,12 +33,12 @@ export default function PropertyDetailsPage() {
       try {
         setLoading(true);
         setError(null);
-        
+
         const response = await propertyService.getSingleProperty(id as string);
         setProperty(response.property);
 
         if (!authLoading && isLoggedIn && user && user.savedProperties) {
-            setIsSaved(user.savedProperties.some((savedId: string) => savedId === response.property._id));
+          setIsSaved(user.savedProperties.some((savedId: string) => savedId === response.property._id));
         }
 
       } catch (err: any) {
@@ -47,7 +50,7 @@ export default function PropertyDetailsPage() {
     };
 
     fetchPropertyDetails();
-  }, [id, isLoggedIn, user, authLoading]); 
+  }, [id, isLoggedIn, user, authLoading]);
 
   const handleSaveToggle = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -58,10 +61,10 @@ export default function PropertyDetailsPage() {
       return;
     }
     if (!user || !user.id) {
-        alert('User information not found. Please try logging in again.');
-        return;
+      alert('User information not found. Please try logging in again.');
+      return;
     }
-    if(isSaving) return;
+    if (isSaving) return;
 
     setIsSaving(true);
     try {
@@ -87,7 +90,7 @@ export default function PropertyDetailsPage() {
   if (loading || authLoading) {
     return (
       <div className="min-h-screen pt-24 flex items-center justify-center bg-[--background] text-[--foreground]">
-        <p>Loading property details...</p> 
+        <p>Loading property details...</p>
       </div>
     );
   }
@@ -103,7 +106,7 @@ export default function PropertyDetailsPage() {
   if (!property) {
     return (
       <div className="min-h-screen pt-24 flex items-center justify-center bg-[--background] text-[--foreground]">
-        <p>Property not found.</p> 
+        <p>Property not found.</p>
       </div>
     );
   }
@@ -126,97 +129,20 @@ export default function PropertyDetailsPage() {
 
         <PropertyImageGallery images={property.images} title={property.title} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div className="md:col-span-2 bg-[--card-bg] p-6 rounded-lg shadow-md border border-[--border]">
-            <h2 className="text-2xl font-semibold mb-4 text-[--foreground]">Details</h2> 
-            <p className="text-[--foreground-muted] mb-4 leading-relaxed">{property.description}</p>
-            
-            <div className="grid grid-cols-2 gap-4 text-[--foreground-muted] text-base mb-4">
-              <div className="flex items-center gap-2"><MapPin size={20} /> {property.location.address}, {property.location.city}, {property.location.country}</div>
-              <div className="flex items-center gap-2"><Tag size={20} /> {property.propertyType}</div>
-              <div className="flex items-center gap-2"><Currency size={20} /> ৳{property.price.toLocaleString()}/month</div> 
-              {property.advancePayment && property.advancePayment > 0 && (
-                <div className="flex items-center gap-2"><Wallet size={20} /> Advance: ৳{property.advancePayment.toLocaleString()}</div> 
-              )}
-            </div>
+        {/* <PropertyInfo property={property} />
+        <LandlordInfo property={property} />
+        <Location property={property} /> */}
 
-            <div className="grid grid-cols-2 gap-4 text-[--foreground-muted] text-base">
-              {property.bedrooms !== undefined && property.bedrooms !== null && (
-                <div className="flex items-center gap-1">
-                  <Bed size={20} /> {property.bedrooms} Bedrooms
-                </div>
-              )}
-              {property.bathrooms !== undefined && property.bathrooms !== null && (
-                <div className="flex items-center gap-1">
-                  <Bath size={20} /> {property.bathrooms} Bathrooms
-                </div>
-              )}
-              {property.livingRooms !== undefined && property.livingRooms !== null && property.livingRooms > 0 && (
-                <div className="flex items-center gap-1">
-                  <DoorOpen size={20} /> {property.livingRooms} Living Rooms
-                </div>
-              )}
-              {property.hasWindows && (
-                <div className="flex items-center gap-2"><Lightbulb size={20} /> Has Windows</div> 
-              )}
-            </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+          <div className="md:col-span-2 space-y-6">
+            <PropertyInfo property={property} />
 
-            {property.amenities && property.amenities.length > 0 && (
-              <div className="mt-6">
-                <h3 className="text-xl font-semibold mb-3 text-[--foreground]">Amenities</h3> 
-                <ul className="grid grid-cols-2 gap-2 text-[--foreground-muted]">
-                  {property.amenities.map((amenity, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <CheckCircle size={16} className="text-green-500" /> {amenity}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
-
-          <div className="md:col-span-1 bg-[--card-bg] p-6 rounded-lg shadow-md border border-[--border]">
-            <h2 className="text-2xl font-semibold mb-4 text-[--foreground]">Landlord Information</h2> 
-            {property.landlord && ( 
-              <div className="flex items-center gap-4 mb-4">
-                {property.landlord.profilePicture ? (
-                  <Image src={property.landlord.profilePicture} alt="Landlord Profile" width={50} height={50} className="rounded-full object-cover" />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-semibold text-lg">
-                    {property.landlord.fullName ? property.landlord.fullName.charAt(0).toUpperCase() : (property.landlord.username ? property.landlord.username.charAt(0).toUpperCase() : '')}
-                  </div>
-                )}
-                
-                <div>
-                  <p className="font-semibold text-[--foreground]">{property.landlord.fullName || property.landlord.username}</p> 
-                  <p className="text-sm text-[--foreground-muted]">Role: {property.landlord.role}</p> 
-                </div>
-              </div>
-            )}
-            {!property.landlord && ( 
-                <p className="text-[--foreground-muted] text-sm mb-4">Landlord details not available.</p>
-            )}
-
-            {isLoggedIn && user && ( 
-              <div className="mt-6">
-                <h3 className="text-xl font-semibold mb-3 text-[--foreground]">Message Landlord</h3> 
-                <InquiryForm landlordId={property.landlord._id as string} propertyId={property._id} /> 
-              </div>
-            )}
-            {!isLoggedIn && (
-              <p className="mt-6 text-[--foreground-muted] text-sm">
-                To message Landlord <Link href="/signin" className="text-[--primary] hover:underline">Log In</Link>
-              </p>
-            )}
+          <div>
+            <LandlordInfo property={property} />
           </div>
         </div>
-
-        {property.location.coordinates && (
-          <div className="bg-[--card-bg] p-6 rounded-lg shadow-md border border-[--border] mt-8">
-            <h2 className="text-2xl font-bold mb-4 text-[--primary]">Location</h2> 
-            <p className="text-[--foreground-muted]">Map will load here: {property.location.coordinates.latitude}, {property.location.coordinates.longitude}</p> 
-          </div>
-        )}
+        <Location property={property} />
       </div>
     </div>
   );
