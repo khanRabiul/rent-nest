@@ -129,10 +129,6 @@ export default function PropertyDetailsPage() {
 
         <PropertyImageGallery images={property.images} title={property.title} />
 
-        {/* <PropertyInfo property={property} />
-        <LandlordInfo property={property} />
-        <Location property={property} /> */}
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
           <div className="md:col-span-2 space-y-6">
             <PropertyInfo property={property} />
