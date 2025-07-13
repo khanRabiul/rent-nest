@@ -66,11 +66,21 @@ const SignUpForm = () => {
         </div>
 
         <div>
+          <label htmlFor="fullName" className="block text-sm font-medium text-[--foreground-muted] mb-1">Full Name</label>
+          <input type="text"
+            id='fullName'
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            className="w-full px-4 py-2 border border-[--border] rounded-md bg-[--bg-light] text-[--foreground] focus:ring-[--primary] focus:border-[--primary]"
+          />
+        </div>
+
+        <div>
           <label htmlFor="email" className="block text-sm font-medium text-[--foreground-muted] mb-1">Email</label>
           <input type="text"
             id='email'
             value={email}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-2 border border-[--border] rounded-md bg-[--bg-light] text-[--foreground] focus:ring-[--primary] focus:border-[--primary]"
             required
           />
@@ -81,25 +91,15 @@ const SignUpForm = () => {
           <input type="text"
             id='password'
             value={password}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full px-4 py-2 border border-[--border] rounded-md bg-[--bg-light] text-[--foreground] focus:ring-[--primary] focus:border-[--primary]"
             required
           />
         </div>
 
         <div>
-          <label htmlFor="fullName" className="block text-sm font-medium text-[--foreground-muted] mb-1">Full Name</label>
-          <input type="text"
-            id='fullName'
-            value={fullName}
-            onChange={(e) => setUsername(e.target.value)}
-            className="w-full px-4 py-2 border border-[--border] rounded-md bg-[--bg-light] text-[--foreground] focus:ring-[--primary] focus:border-[--primary]"
-          />
-        </div>
-
-        <div>
           <label htmlFor="role" className="block text-sm font-medium text-[--foreground-muted] mb-1">Role</label>
-          <select id="role" value={role} onChange={(e) => e.target.value}
+          <select id="role" value={role} onChange={(e) => setRole(e.target.value)}
             className="w-full px-4 py-2 border border-[--border] rounded-md bg-[--bg-light] text-[--foreground] focus:ring-[--primary] focus:border-[--primary]"
           >
             <option value="user">User</option>

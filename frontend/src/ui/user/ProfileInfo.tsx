@@ -1,3 +1,5 @@
+'use client'
+
 import { IFrontendUser } from "@/contexts/AuthContext";
 import Image from "next/image";
 
