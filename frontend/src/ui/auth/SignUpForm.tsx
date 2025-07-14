@@ -102,6 +102,7 @@ const SignUpForm = () => {
           <select id="role" value={role} onChange={(e) => setRole(e.target.value)}
             className="w-full px-4 py-2 border border-[--border] rounded-md bg-[--bg-light] text-[--foreground] focus:ring-[--primary] focus:border-[--primary]"
           >
+            <option value="">Select Role</option>
             <option value="user">User</option>
             <option value="landlord">Landlord</option>
             <option value="admin">Admin</option>

@@ -17,21 +17,29 @@ const SignInForm = () => {
   const { login } = useAuth();
   // const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setFormLoading(true);
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setError(null);
+  setFormLoading(true);
 
-    try {
-      await login(email, password);
+  const trimmedEmail = email.trim();
+  const trimmedPassword = password.trim();
 
-    } catch (error: any) {
-      console.error('Login failed:', error.response?.data || error.message);
-      setError(error.response?.data?.message || 'Login failed. Email or password does not matched');
-    } finally {
-      setFormLoading(false);
-    }
+  if (!trimmedEmail || !trimmedPassword) {
+    setError("Please enter both email and password.");
+    setFormLoading(false);
+    return;
   }
+
+  try {
+    await login(trimmedEmail, trimmedPassword);
+  } catch (error: any) {
+    console.error('Login failed:', error.response?.data || error.message);
+    setError(error.response?.data?.message || 'Login failed. Email or password does not match');
+  } finally {
+    setFormLoading(false);
+  }
+};
 
   return (
     <div className="bg-[--card-bg] p-8 rounded-lg shadow-xl border border-[--border] w-full max-w-md">
@@ -74,7 +82,7 @@ const SignInForm = () => {
 
       <p className="mt-6 text-center text-[--foreground-muted]">
         Do not have accoutn? {' '}
-        <Link href='/siginup' className="text-blue-600 hover:underline">
+        <Link href='/signup' className="text-blue-600 hover:underline">
           Sign Up
         </Link>
       </p>

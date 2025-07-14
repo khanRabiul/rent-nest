@@ -87,6 +87,23 @@ export const AuthProvider = ({
     }
   };
 
+
+  // const login = async (email: string, password: string) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await authService.login({ email, password }); // already res = response.data
+  //     localStorage.setItem("token", res.token); // ✅ directly use res.token
+  //     setUser(res.user as IFrontendUser);
+  //     setIsLoggedIn(true);
+  //     return res;
+  //   } catch (error: any) {
+  //     console.error("Login failed:", error.response?.data || error.message);
+  //     throw error;
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   // 5. Register function
   const register = async (userData: any) => {
     setIsLoading(true);
@@ -100,6 +117,20 @@ export const AuthProvider = ({
       setIsLoading(false);
     }
   };
+ 
+  // const register = async (userData: any) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await authService.register(userData); // res = response.data
+  //     return res; // ✅ no res.data
+  //   } catch (error: any) {
+  //     console.error("Registration failed:", error.response?.data?.message || error.message);
+  //     throw error;
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
 
   // 6. Logout function
   const logout = () => {
