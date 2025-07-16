@@ -1,10 +1,10 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export interface IUser extends Document {
   username: string;
   email: string;
-  password?: string;
+  password: string;
   role: 'guest' | 'user' | 'landlord' | 'admin';
   fullName?: string;
   profilePicture?: string;
@@ -35,7 +35,7 @@ const UserSchema: Schema<IUser> = new Schema({
     type: String,
     required: [true, 'Password is required'],
     minlength: [6, 'Password must be at least 6 characters'],
-    select: false,
+    // select: false,
   },
   role: {
     type: String,

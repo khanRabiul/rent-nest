@@ -1,7 +1,7 @@
 'use client';
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter} from "next/navigation";
 import { useState } from "react";
 
 
@@ -15,31 +15,33 @@ const SignInForm = () => {
   const [formLoading, setFormLoading] = useState(false);
 
   const { login } = useAuth();
-  // const router = useRouter();
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setError(null);
-  setFormLoading(true);
+  const router = useRouter()
 
-  const trimmedEmail = email.trim();
-  const trimmedPassword = password.trim();
-
-  if (!trimmedEmail || !trimmedPassword) {
-    setError("Please enter both email and password.");
-    setFormLoading(false);
-    return;
-  }
-
-  try {
-    await login(trimmedEmail, trimmedPassword);
-  } catch (error: any) {
-    console.error('Login failed:', error.response?.data || error.message);
-    setError(error.response?.data?.message || 'Login failed. Email or password does not match');
-  } finally {
-    setFormLoading(false);
-  }
-};
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setFormLoading(true);
+    
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+    
+    if (!trimmedEmail || !trimmedPassword) {
+      setError("Please enter both email and password.");
+      setFormLoading(false);
+      return;
+    }
+    
+    try {
+      await login(trimmedEmail, trimmedPassword);
+      router.push('/properties')
+    } catch (error: any) {
+      console.error('Login failed:', error.response?.data || error.message);
+      setError(error.response?.data?.message || 'Login failed. Email or password does not match');
+    } finally {
+      setFormLoading(false);
+    }
+  };
 
   return (
     <div className="bg-[--card-bg] p-8 rounded-lg shadow-xl border border-[--border] w-full max-w-md">

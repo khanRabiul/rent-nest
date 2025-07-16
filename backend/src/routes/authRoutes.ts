@@ -9,19 +9,19 @@ const router = Router();
 router.post('/login', async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-
     if (!email || !password) {
       return res.status(400).json({ message: 'Please enter both email and password.' });
     }
 
     const user = await User.findOne({ email });
+
     if (!user || !user.password) {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
 
-
     // Compare hashed password
     const isMatch = await bcrypt.compare(password, user.password);
+
     if (!isMatch) {
       return res.status(401).json({ message: 'Invalid email or password.' });
     }
@@ -61,13 +61,10 @@ router.post('/register', async (req: Request, res: Response) => {
       return res.status(409).json({ message: 'User with this email or username already exists.' });
     }
 
-    // Hash password before saving
-    const hashedPassword = await bcrypt.hash(password, 10);
-
     const newUser = await User.create({
       username,
       email,
-      password: hashedPassword,
+      password,
       role: role || 'user',
       fullName: fullName || null,
     });

@@ -95,7 +95,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <button onClick={handleLogout} className="px-4 py-1.5 rounded-md bg-[var(--secondary)] text-white hover:opacity-90 transition-opacity font-semibold">
-                  লগআউট
+                  Log Out
                 </button>
               )}
               <ThemeSwitcher />
