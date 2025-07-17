@@ -44,7 +44,7 @@ const LandlordInfo = ({ property }: LandlordInfoProps) => {
         <p className="text-[--foreground-muted] text-sm mb-4">Landlord details not available.</p>
       )}
 
-      {isLoggedIn && user ? (
+      {isLoggedIn && user && property.landlord ? (
         <div className="mt-6">
           <h3 className="text-xl font-semibold mb-3 text-[--foreground]">Message Landlord</h3>
           <InquiryForm landlordId={property.landlord._id as string} propertyId={property._id} />

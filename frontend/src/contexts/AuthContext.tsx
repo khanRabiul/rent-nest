@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 // user data interface
 export interface IFrontendUser {
+  _id: string;
   id: string;
   username: string;
   email: string;
@@ -77,7 +78,6 @@ export const AuthProvider = ({
     try {
       const res = await authService.login({ email, password });
       localStorage.setItem("token", res.token);
-      console.log(res)
       setUser(res.user as IFrontendUser);        
       setIsLoggedIn(true);
       return res;
